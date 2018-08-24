@@ -34,9 +34,9 @@ public class ParamBuilder {
     public ParamBuilder putAll(HashMap<String, String> params) {
         if (params == null || params.size() <= 0) return this;
         for (String key : params.keySet()) {
-            this.put(key, params.get(key)).and();
+            this.and().put(key, params.get(key));
         }
-        sb.deleteCharAt(sb.length() - 1);
+        //sb.deleteCharAt(sb.length() - 1);
         return this;
     }
 }

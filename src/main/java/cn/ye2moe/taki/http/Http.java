@@ -32,13 +32,13 @@ public class Http {
 
         tencentCloudAPI("cvm", "DescribeInstances");
 
-        HashMap <String,String> params = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
         //params.put("Action","RecordList");
         //params.put("offset","0");
-       // params.put("length","20");
-        params.put("domain","ye2moe.cn");
+        // params.put("length","20");
+        //params.put("domain", "111.231.133.158");
 
-        tencentCloudAPI("cns", "RecordList" , params);
+        tencentCloudAPI("cns", "RecordList", params);
         //tencentAPI("cns", "DescribeInstances", params);
         //tencentAPI("cns", "DescribeInstances", params);
 
@@ -61,6 +61,7 @@ public class Http {
                 .and().put("SecretId", "AKIDT8ctzt37TlsqdInphT6XlndNvUr2Bsa7")
                 .and().put("SignatureMethod", "HmacSHA1")
                 .and().put("Timestamp", timestamp)
+                .and().put("domain", "111.231.133.158")
                 .build();
 
         String msg = "GET" + val;
@@ -87,8 +88,8 @@ public class Http {
                 .and().put("Nonce", nonce)
                 .and().put("Signature", urlCode)
                 .and().put("SignatureMethod", "HmacSHA1")
-                .and().putAll(params)
-                //.and().put("domain" , URLEncoder.encode("111.231.133.158","UTF-8"))
+                .and().put("domain", "111.231.133.158")
+                .putAll(params)
                 .build();
 
         //String json = HttpsClient.get(url);
