@@ -30,71 +30,7 @@ public class Http {
 
         */
 
-        tencentCloudAPI("cvm", "DescribeInstances");
-
-        HashMap<String, String> params = new HashMap<>();
-        //params.put("Action","RecordList");
-        //params.put("offset","0");
-        // params.put("length","20");
-        //params.put("domain", "111.231.133.158");
-
-        tencentCloudAPI("cns", "RecordList", params);
-        //tencentAPI("cns", "DescribeInstances", params);
-        //tencentAPI("cns", "DescribeInstances", params);
 
     }
 
-    public static void tencentCloudAPI(String host, String action) {
-        tencentCloudAPI(host, action, null);
-    }
-
-    public static void tencentCloudAPI(String host, String action, HashMap params) {
-
-        Random random = new Random(System.currentTimeMillis());
-        int nonce = (int) Math.pow((float) random.nextInt(400), 2);
-        int timestamp = ConcurrentDateUtil.timestamp(new Date());
-
-        String val = new ParamBuilder(host + ".api.qcloud.com/v2/index.php?")
-                .put("Action", action)
-                .and().put("Nonce", nonce)
-                .and().put("Region", "ap-shanghai")
-                .and().put("SecretId", "AKIDT8ctzt37TlsqdInphT6XlndNvUr2Bsa7")
-                .and().put("SignatureMethod", "HmacSHA1")
-                .and().put("Timestamp", timestamp)
-                .and().put("domain", "111.231.133.158")
-                .build();
-
-        String msg = "GET" + val;
-        System.out.println("signature  " + msg);
-
-        String secretKey = "c4MTREpETXO3ZuxpVzHRQDqJaeXEj4E3";
-        String signature = new BASE64Encoder().encode(HMACSHA1.getHmacSHA1(msg, secretKey));
-        System.out.println("BASE64Encoder：" + signature);
-
-        String urlCode = null;
-        try {
-            urlCode = URLEncoder.encode(signature, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return;
-        }
-        System.out.println("urlCode：" + urlCode);
-
-        String url = new ParamBuilder("https://" + host + ".api.qcloud.com/v2/index.php?")
-                .put("Action", action)
-                .and().put("SecretId", "AKIDT8ctzt37TlsqdInphT6XlndNvUr2Bsa7")
-                .and().put("Region", "ap-shanghai")
-                .and().put("Timestamp", timestamp)
-                .and().put("Nonce", nonce)
-                .and().put("Signature", urlCode)
-                .and().put("SignatureMethod", "HmacSHA1")
-                .and().put("domain", "111.231.133.158")
-                .putAll(params)
-                .build();
-
-        //String json = HttpsClient.get(url);
-
-        System.out.println(url);
-
-    }
 }

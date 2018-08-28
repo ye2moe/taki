@@ -1,6 +1,6 @@
 package cn.ye2moe.taki.common;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class ParamBuilder {
     private StringBuilder sb;
@@ -33,10 +33,26 @@ public class ParamBuilder {
 
     public ParamBuilder putAll(HashMap<String, String> params) {
         if (params == null || params.size() <= 0) return this;
-        for (String key : params.keySet()) {
+
+        withSort(params);
+        //withoutSort(params);
+        return this;
+    }
+
+    private void withoutSort(HashMap<String, String> params){
+        for(String key : params.keySet()){
+            System.out.println(params.get(key));
             this.and().put(key, params.get(key));
         }
-        //sb.deleteCharAt(sb.length() - 1);
-        return this;
+    }
+
+    private void withSort(HashMap<String, String> params){
+        String[] array =  Arrays.asList(params.keySet().toArray()).toArray(new String[]{});
+
+        Arrays.sort(array);
+        for(String key : array){
+            System.out.println(params.get(key));
+            this.and().put(key, params.get(key));
+        }
     }
 }
