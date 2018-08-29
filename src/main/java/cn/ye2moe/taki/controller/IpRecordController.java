@@ -31,16 +31,12 @@ public class IpRecordController {
     @ResponseBody
     public Result ip(@RequestParam("host") String host ,
                      @RequestParam(value = "localIP" ,require = false ,defaultValue = "127.0.0.1") String localIP ,
-                     @IP String ip ,
-                     @SocketAddress InetSocketAddress socketAddress
+                     @IP String ip
                       ) {
         //TODO 唯一保证  ipRecord.get(host).getMac()
         HostInfo info = new HostInfo()
                 .setName(host)
-                .setIp(ip)
-                .setPort(socketAddress.getPort())
-                .setInnerIP(localIP)
-                .setMac(UUID.randomUUID().toString());
+                .setIp(ip);
         ipRecord.put(host , info);
         return Result.SUCCESS.setData(ip);
     }
